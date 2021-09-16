@@ -1,79 +1,86 @@
-import { useLayoutEffect } from "react";
-import { createStore } from "redux";
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/App";
 
-const form = document.querySelector("form");
-const input = document.querySelector("input");
-const ul = document.querySelector("ul");
+ReactDOM.render(<App></App>, document.getElementById("root"));
 
-const ADD_TODO = "ADD_TODO";
-const DELETE_TODO = "DELETE_TODO";
+//---------------✅ This is vanilla JS & Redux
+// import { useLayoutEffect } from "react";
+// import { createStore } from "redux";
 
-const addToDo = (text) => {
-  return {
-    type: ADD_TODO,
-    text,
-  };
-};
+// const form = document.querySelector("form");
+// const input = document.querySelector("input");
+// const ul = document.querySelector("ul");
 
-const deleteToDo = (id) => {
-  return {
-    type: DELETE_TODO,
-    id,
-  };
-};
+// const ADD_TODO = "ADD_TODO";
+// const DELETE_TODO = "DELETE_TODO";
 
-const reducer = (state = [], action) => {
-  console.log(action);
-  switch (action.type) {
-    case ADD_TODO:
-      const newToDoObj = { text: action.text, id: Date.now() };
-      return [newToDoObj, ...state];
-    case DELETE_TODO:
-      const cleaned = state.filter((toDo) => toDo.id !== action.id);
-      return cleaned;
-    default:
-      return state;
-  }
-};
+// const addToDo = (text) => {
+//   return {
+//     type: ADD_TODO,
+//     text,
+//   };
+// };
 
-const store = createStore(reducer);
+// const deleteToDo = (id) => {
+//   return {
+//     type: DELETE_TODO,
+//     id,
+//   };
+// };
 
-store.subscribe(() => console.log(store.getState()));
+// const reducer = (state = [], action) => {
+//   console.log(action);
+//   switch (action.type) {
+//     case ADD_TODO:
+//       const newToDoObj = { text: action.text, id: Date.now() };
+//       return [newToDoObj, ...state];
+//     case DELETE_TODO:
+//       const cleaned = state.filter((toDo) => toDo.id !== action.id);
+//       return cleaned;
+//     default:
+//       return state;
+//   }
+// };
 
-const dispatchAddToDo = (text) => {
-  store.dispatch(addToDo(text));
-};
+// const store = createStore(reducer);
 
-const dispatchDeleteToDo = (e) => {
-  const id = parseInt(e.target.parentNode.id);
-  store.dispatch(deleteToDo(id));
-};
+// store.subscribe(() => console.log(store.getState()));
 
-const paintToDos = () => {
-  const toDos = store.getState();
-  ul.innerHTML = "";
-  toDos.forEach((toDo) => {
-    const li = document.createElement("li");
-    const btn = document.createElement("button");
-    btn.innerText = "DEL";
-    btn.addEventListener("click", dispatchDeleteToDo);
-    li.id = toDo.id;
-    li.innerText = toDo.text;
-    console.log(li);
-    ul.appendChild(li);
-    li.appendChild(btn);
-  });
-};
-store.subscribe(paintToDos);
+// const dispatchAddToDo = (text) => {
+//   store.dispatch(addToDo(text));
+// };
 
-const onSubmit = (e) => {
-  e.preventDefault();
-  const toDo = input.value;
-  input.value = "";
-  dispatchAddToDo(toDo);
-};
+// const dispatchDeleteToDo = (e) => {
+//   const id = parseInt(e.target.parentNode.id);
+//   store.dispatch(deleteToDo(id));
+// };
 
-form.addEventListener("submit", onSubmit);
+// const paintToDos = () => {
+//   const toDos = store.getState();
+//   ul.innerHTML = "";
+//   toDos.forEach((toDo) => {
+//     const li = document.createElement("li");
+//     const btn = document.createElement("button");
+//     btn.innerText = "DEL";
+//     btn.addEventListener("click", dispatchDeleteToDo);
+//     li.id = toDo.id;
+//     li.innerText = toDo.text;
+//     console.log(li);
+//     ul.appendChild(li);
+//     li.appendChild(btn);
+//   });
+// };
+// store.subscribe(paintToDos);
+
+// const onSubmit = (e) => {
+//   e.preventDefault();
+//   const toDo = input.value;
+//   input.value = "";
+//   dispatchAddToDo(toDo);
+// };
+
+// form.addEventListener("submit", onSubmit);
 
 // -------- ✅vanilla는 로컬 저장소에 toDos[]어레이를 저장 또는 가져올 수 있다
 //          하지만 리덕스는 더 좋은 방법을 가진다
