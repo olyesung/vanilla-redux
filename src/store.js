@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
 
 //-----------Use Redux tookit / 코드 양을 줄일수있음
 const addToDo = createAction("ADD");
@@ -12,6 +12,8 @@ const reducer = createReducer([], {
   [deleteToDo]: (state, action) =>
     state.filter((toDo) => toDo.id !== action.payload),
 });
+
+const store = configureStore({ reducer });
 
 // const reducer = (state = [], action) => {
 //   switch (action.type) {
@@ -53,7 +55,7 @@ const reducer = createReducer([], {
 //   }
 // };
 
-const store = createStore(reducer);
+// const store = createStore(reducer);
 
 export const actionCreators = {
   addToDo,
